@@ -85,3 +85,13 @@ adaptador de testes baseado no `psql` (`test/shim/pg`).
 
 O plano gratuito do Render dorme após inatividade (a primeira abertura demora) e o banco gratuito expira depois de
 algum tempo: para uso real, use um plano pago ou outro provedor com backups.
+
+## Usando o Supabase como banco
+
+O Supabase fornece só o **PostgreSQL**; a API (Node.js) precisa rodar em outro lugar (Render, Railway, Fly…, como serviço web).
+
+1. No Supabase, **SQL Editor**: cole e rode `db/schema.sql` e, em seguida, `db/supabase.sql` (liga o RLS para a Data API pública não expor os dados).
+2. **Project Settings → API → Data API**: desligue a Data API, se não for usá-la.
+3. Botão **Connect** do projeto → **Session pooler** (porta 5432) → copie a string `postgresql://postgres.<ref>:<senha>@…pooler.supabase.com:5432/postgres`. Use o pooler, não a conexão direta (que é só IPv6).
+4. No serviço da API, defina: `DATABASE_URL` (a string acima), `DATABASE_SSL=true`, `JWT_SECRET` (aleatório e longo), `CORS_ORIGIN=https://gabbyteacher011-afk.github.io`. Comando de início: `npm start`.
+5. Crie a professora (`npm run create-user -- …`, no Shell do serviço ou na sua máquina com a mesma `DATABASE_URL`) e coloque o endereço da API em `config.js` do site.
