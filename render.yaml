@@ -1,0 +1,23 @@
+# Blueprint do Render: cria a API e o PostgreSQL de uma vez (render.com > New > Blueprint).
+services:
+  - type: web
+    name: api-teacher-gabi
+    runtime: node
+    plan: free
+    buildCommand: npm install --omit=dev
+    startCommand: npm run migrate && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: teacher-gabi-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://gabbyteacher011-afk.github.io
+      - key: DATABASE_SSL
+        value: "true"
+databases:
+  - name: teacher-gabi-db
+    plan: free

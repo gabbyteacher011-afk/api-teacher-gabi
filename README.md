@@ -75,3 +75,13 @@ adaptador de testes baseado no `psql` (`test/shim/pg`).
 - O link de arquivo carrega o token na URL (`?token=`) porque links `<a>` não enviam cabeçalho; ele expira
   conforme `TOKEN_HOURS`. Use HTTPS sempre.
 - Dados de menores de idade: a API só entrega ao responsável o painel publicado para a conta dele.
+
+## Render (caminho mais curto)
+
+1. Em render.com: **New → Blueprint** e escolha este repositório (usa o `render.yaml`).
+2. Quando terminar, abra o **Shell** do serviço e crie a professora:
+   `npm run create-user -- seu@email.com "senha-forte" professora "Seu Nome"`
+3. Copie o endereço do serviço (`https://….onrender.com`) para `apiUrl` no `config.js` do site.
+
+O plano gratuito do Render dorme após inatividade (a primeira abertura demora) e o banco gratuito expira depois de
+algum tempo: para uso real, use um plano pago ou outro provedor com backups.
